@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login success</title>
+  </head>
+  <body>
+    <h1>Layout</h1>
+    <section id="layout">
+      <button onclick="showPage1()">1</button>
+      <button onclick="showPage2()">2</button>
+      <button onclick="showPage3()">3</button>
+      <button onclick="showPage4()">4</button>
+    </section>
+    <p>PENDING:</p>
+    <p id="csv-data"></p>
+    <button onclick="redirectToGradePage()">Grade Now</button>
+    <script>
+      function showPage1() {
+        window.location.href = "plant1.html";
+      }
+      function showPage2() {
+        window.location.href = "plant2.html";
+      }
+      function showPage3() {
+        window.location.href = "plant3.html";
+      }
+      function showPage4() {
+        window.location.href = "plant4.html";
+      }
+
+      fetch("tobe.csv")
+        .then(response => response.text())
+        .then(data => {
+        const rows = data.split("\n");
+        document.getElementById("csv-data").innerHTML = rows[1];
+      });
+
+      function redirectToGradePage() {
+      window.location.href = "grade.html";
+      }
+    </script>
+  </body>
+</html>
