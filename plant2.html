@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plant Monitoring</title>
+  </head>
+  <body>
+    <h1>Plant 2 Monitoring</h1>
+    <div id="container">
+      <img id="plant-img" src="" />
+      <div id="values">
+        <p>Temperature: <span id="temperature"></span></p>
+        <p>Humidity: <span id="humidity"></span></p>
+        <p>Moisture: <span id="moisture"></span></p>
+      </div>
+    </div>
+    <script>
+      const plantImg = document.getElementById("plant-img");
+
+      function loadLatestValues() {
+        // Replace the URL with the URL of your CSV file
+        const csvUrl = "http://yourdomain.com/path/to/grades.csv";
+
+        fetch(csvUrl)
+          .then((response) => response.text())
+          .then((data) => {
+            const rows = data.split("\n");
+            const lastRow = rows[rows.length - 2];
+            const values = lastRow.split(",");
+            const imageURL = values[3];
+            const temperature = values[0];
+            const humidity = values[1];
+            const moisture = values[2];
+
+            plantImg.src = imageURL;
+            document.getElementById("temperature").innerText = temperature;
+            document.getElementById("humidity").innerText = humidity;
+            document.getElementById("moisture").innerText = moisture;
+          })
+          .catch((error) => {
+            console.error("Error loading latest values", error);
+          });
+      }
+
+      // Call the function to load the latest values
+      loadLatestValues();
+    </script>
+  </body>
+</html>
