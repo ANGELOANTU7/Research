@@ -1,23 +1,97 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Grades</title>
+    <title>Grade now</title>
   </head>
   <body>
-    <h1>Grades</h1>
-    <div id="image-container">
-      <img id="grade-image" src="">
+    <h1>Grade</h1>
+    <div id="container">
+      <img id="plant-img" src="" />
+      <div id="grades">
+        <button id="grade0">0</button>
+        <button id="grade1">1</button>
+        <button id="grade2">2</button>
+        <button id="grade3">3</button>
+        <button id="grade4">4</button>
+        <button id="grade5">5</button>
+        <br />
+        <br />
+        <br />
+        <button id="percent50">50%</button>
+        <button id="percent75">75%</button>
+        <button id="percent100">100%</button>
+      </div>
     </div>
-    <div id="quiz-container">
-      <button id="btn-0" onclick="recordGrade(0)">0</button>
-      <button id="btn-1" onclick="recordGrade(1)">1</button>
-      <button id="btn-2" onclick="recordGrade(2)">2</button>
-      <button id="btn-3" onclick="recordGrade(3)">3</button>
-      <button id="btn-4" onclick="recordGrade(4)">4</button>
-      <button id="btn-5" onclick="recordGrade(5)">5</button>
-      <button id="btn-50" onclick="recordGrade(50)">50%</button>
-      <button id="btn-75" onclick="recordGrade(75)">75%</button>
-      <button id="btn-100" onclick="recordGrade(100)">100%</button>
-    </div>
-    </body>
-    </html>
+    <script src="https://cdn.jsdelivr.net/npm/csv-writer/dist/browser/csv-writer.js"></script>
+
+    <script>
+      const plantImg = document.getElementById("plant-img");
+
+// Load the latest image from the CSV file
+function loadLatestImage() {
+  // Replace the URL with the URL of your CSV file
+  const csvUrl =
+    "csvurl";
+
+  fetch(csvUrl)
+    .then((response) => response.text())
+    .then((data) => {
+      const rows = data.split("\n");
+      const lastRow = rows[rows.length - 2];
+      const imageURL = lastRow.split(",")[0];
+
+      plantImg.src = imageURL;
+    })
+    .catch((error) => {
+      console.error("Error loading latest image", error);
+    });
+}
+
+// Call the function to load the latest image
+loadLatestImage();
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+
+function writeToCSV(grade, percentage) {
+  const csvWriter = createCsvWriter({
+    path: 'tobe.csv',
+    header: [
+      { id: 'grade', title: 'Grade' },
+      { id: 'percentage', title: 'Percentage' },
+    ]
+  });
+
+  const record = { grade, percentage };
+
+  csvWriter.writeRecords([record])
+    .then(() => console.log('Data saved to CSV file.'));
+}
+// Get all grade buttons
+const gradeButtons = document.querySelectorAll("#grades button[id^='grade']");
+
+// Add click event listener to each grade button
+gradeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const grade = button.innerText;
+    const percentage = document.querySelector("#grades button.active").innerText;
+
+    writeToCSV(grade, percentage);
+  });
+});
+
+// Get all percentage buttons
+const percentageButtons = document.querySelectorAll("#grades button[id^='percent']");
+
+// Add click event listener to each percentage button
+percentageButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    // Remove active class from all buttons
+    percentageButtons.forEach((button) => button.classList.remove("active"));
+
+    // Add active class to the clicked button
+    button.classList.add("active");
+  });
+});
+
+    </script>
+  </body>
+</html>
