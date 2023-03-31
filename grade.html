@@ -1,23 +1,94 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Grades</title>
+    <title>Grade now</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
   </head>
-  <body>
-    <h1>Grades</h1>
-    <div id="image-container">
-      <img id="grade-image" src="">
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl font-bold text-center mt-8 mb-4">Grade</h1>
+      <div id="container" class="flex flex-col md:flex-row items-center justify-center">
+        <div class="border rounded-lg p-4 m-4">
+          <img id="plant-img" src="" />
+        </div>
+        <div id="grades" class="flex flex-col md:flex-row items-center justify-center">
+          <button id="grade1" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">1</button>
+          <button id="grade2" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">2</button>
+          <button id="grade3" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">3</button>
+          <button id="grade4" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">4</button>
+          <button id="grade5" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">5</button>
+        </div>
+        <div id="percentages" class="flex flex-col md:flex-row items-center justify-center">
+          <button id="percent50" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">50%</button>
+          <button id="percent75" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">75%</button>
+          <button id="percent100" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">100%</button>
+        </div>
+      </div>
     </div>
-    <div id="quiz-container">
-      <button id="btn-0" onclick="recordGrade(0)">0</button>
-      <button id="btn-1" onclick="recordGrade(1)">1</button>
-      <button id="btn-2" onclick="recordGrade(2)">2</button>
-      <button id="btn-3" onclick="recordGrade(3)">3</button>
-      <button id="btn-4" onclick="recordGrade(4)">4</button>
-      <button id="btn-5" onclick="recordGrade(5)">5</button>
-      <button id="btn-50" onclick="recordGrade(50)">50%</button>
-      <button id="btn-75" onclick="recordGrade(75)">75%</button>
-      <button id="btn-100" onclick="recordGrade(100)">100%</button>
-    </div>
-    </body>
-    </html>
+
+    <script>
+      let plantData = null;
+      let currentPlantIndex = 0;
+
+      function updatePlantData() {
+        const url = 'https://api.example.com/plant-details';
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            plantData = data;
+            document.getElementById('plant-img').src = data.camera_feed_url;
+          });
+      }
+
+      function updateGrades() {
+        document.getElementById('grade1').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].humidity_grade = 1;
+          updatePlantData();
+        });
+
+        document.getElementById('grade2').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].humidity_grade = 2;
+          updatePlantData();
+        });
+
+        document.getElementById('grade3').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].humidity_grade = 3;
+          updatePlantData();
+        });
+
+        document.getElementById('grade4').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].humidity_grade = 4;
+          updatePlantData();
+        });
+
+        document.getElementById('grade5').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].humidity_grade = 5;
+          updatePlantData();
+        });
+
+        document.getElementById('percent50').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].moisture_grade = '50%';
+          updatePlantData();
+        });
+
+        document.getElementById('percent75').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].moisture_grade = '75%';
+          updatePlantData();
+        });
+
+        document.getElementById('percent100').addEventListener('click', () => {
+          plantData.plants[currentPlantIndex].moisture_grade = '100%';
+          updatePlantData();
+        });
+      }
+
+      function init() {
+        updatePlantData();
+        updateGrades();
+      }
+
+      init();
+    </script>
+  </body>
+</html>

@@ -7,4 +7,4 @@ function validate() {
       document.getElementById("message").innerHTML = "Invalid username or password!";
     }
   }
-  
+ 
