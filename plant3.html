@@ -2,16 +2,30 @@
 <html>
   <head>
     <title>Plant Monitoring</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
   </head>
-  <body>
-    <h1>Plant 3 Monitoring</h1>
-    <div id="container">
-      <img id="plant-img" src="" />
-      <div id="values">
-        <p>Temperature: <span id="temperature"></span></p>
-        <p>Humidity: <span id="humidity"></span></p>
-        <p>Moisture: <span id="moisture"></span></p>
+  <body class="bg-gray-100">
+    <h1 class="text-3xl font-bold text-center mt-8 mb-4">Plant 3 Monitoring</h1>
+    <div id="container" class="flex flex-col items-center justify-center">
+      <img id="plant-img" src="" class="w-1/2 rounded-lg shadow-lg mb-4" />
+      <div id="values" class="bg-white rounded-lg shadow-lg p-4">
+        <p class="text-lg font-bold">Temperature: <span id="temperature"></span></p>
+        <p class="text-lg font-bold">Humidity: <span id="humidity"></span></p>
+        <p class="text-lg font-bold">Moisture: <span id="moisture"></span></p>
       </div>
     </div>
-    </body>
+
+    <script>
+      const url = 'https://api.example.com/plant-details';
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          document.getElementById('temperature').textContent = data.temperature;
+          document.getElementById('humidity').textContent = data.humidity;
+          document.getElementById('moisture').textContent = data.moisture;
+          document.getElementById('plant-img').src = data.camera_feed_url;
+        });
+    </script>
+  </body>
 </html>
