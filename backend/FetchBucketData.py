@@ -5,8 +5,8 @@ bucket_name = 'researchcusat'
 
 
 # Replace with your AWS access key and secret access key
-access_key = 'AKIAZTHHIOR4IBPUFWHE'
-secret_key = 'AjOjcq+C9+9moPCFpjnVwgkSRJKJ7+g+HagWN6rC'
+access_key = 'access_key_here'
+secret_key = 'secret_key_here'
 
 # Create an S3 client with your credentials
 s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key)
