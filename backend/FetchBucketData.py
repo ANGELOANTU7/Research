@@ -1,7 +1,7 @@
 import boto3
 
 
-bucket_name = 'researchcusat'
+bucket_name = 'bucket_name_here'
 
 
 # Replace with your AWS access key and secret access key
