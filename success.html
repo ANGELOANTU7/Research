@@ -3,21 +3,30 @@
   <head>
     <title>Login success</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      body {
+        background-image: url("https://images.pexels.com/photos/1090977/pexels-photo-1090977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
   </head>
-  <body class="bg-gray-100">
-    <h1 class="text-3xl font-bold text-center mt-8 mb-4">Layout</h1>
-    <section id="layout" class="flex flex-wrap justify-center">
-      <button onclick="showPage1()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">1</button>
-      <button onclick="showPage2()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">2</button>
-      <br />
-      <br />
-      <button onclick="showPage3()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">3</button>
-      <button onclick="showPage4()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">4</button>
-    </section>
-    <div class="flex flex-col items-center justify-center">
-      <p class="text-center text-xl font-bold mt-8 mb-4">PENDING:</p>
-      <p id="csv-data"></p>
-      <button onclick="redirectToGradePage()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">Grade Now</button>
+  <body>
+    <div class="min-h-screen bg-gray-900 bg-opacity-50 flex flex-col justify-center items-center">
+      <h1 class="text-3xl font-bold text-white mt-8 mb-4">Plant Status</h1>
+      <section id="layout" class="flex flex-wrap justify-center">
+        <button onclick="showPage1()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">1</button>
+        <button onclick="showPage2()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">2</button>
+        <br />
+        <br />
+        <button onclick="showPage3()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">3</button>
+        <button onclick="showPage4()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline m-2">4</button>
+      </section>
+      <div class="flex flex-col items-center justify-center mt-8">
+        <p class="text-center text-xl font-bold text-white mb-4">PENDING: 15</p>
+        <p id="csv-data" class="text-white"></p>
+        <button onclick="redirectToGradePage()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline mt-4">Grade Now</button>
+      </div>
     </div>
     <script>
       function showPage1() {

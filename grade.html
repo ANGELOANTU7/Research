@@ -1,94 +1,146 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Grade now</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
-  </head>
-  <body class="bg-gray-100">
-    <div class="container mx-auto px-4">
-      <h1 class="text-3xl font-bold text-center mt-8 mb-4">Grade</h1>
-      <div id="container" class="flex flex-col md:flex-row items-center justify-center">
-        <div class="border rounded-lg p-4 m-4">
-          <img id="plant-img" src="" />
-        </div>
-        <div id="grades" class="flex flex-col md:flex-row items-center justify-center">
-          <button id="grade1" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">1</button>
-          <button id="grade2" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">2</button>
-          <button id="grade3" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">3</button>
-          <button id="grade4" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">4</button>
-          <button id="grade5" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">5</button>
-        </div>
-        <div id="percentages" class="flex flex-col md:flex-row items-center justify-center">
-          <button id="percent50" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">50%</button>
-          <button id="percent75" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">75%</button>
-          <button id="percent100" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2">100%</button>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      let plantData = null;
-      let currentPlantIndex = 0;
-
-      function updatePlantData() {
-        const url = 'https://api.example.com/plant-details';
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            plantData = data;
-            document.getElementById('plant-img').src = data.camera_feed_url;
-          });
+<head>
+	<title>Plant Grading</title>
+	<style>
+		img {
+			display: block;
+			margin: auto;
+			width: 300px;
+			height: 300px;
+			margin-top: 30px;
+			border: 5px solid rgb(255, 255, 255);
+			padding: 25px;
+		}
+    body {
+        background-image: url("https://images.unsplash.com/photo-1557682268-e3955ed5d83f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=282&q=80");
+        background-repeat: no-repeat;
+        background-size: cover;
       }
+		.button-container {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
 
-      function updateGrades() {
-        document.getElementById('grade1').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].humidity_grade = 1;
-          updatePlantData();
-        });
+		button {
+			margin: 0 10px;
+			padding: 10px;
+			border: none;
+			background-color: #4CAF50;
+			color: white;
+			cursor: pointer;
+			border-radius: 5px;
+		}
 
-        document.getElementById('grade2').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].humidity_grade = 2;
-          updatePlantData();
-        });
+		button:hover {
+			background-color: #3e8e41;
+		}
 
-        document.getElementById('grade3').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].humidity_grade = 3;
-          updatePlantData();
-        });
+		.selected {
+			background-color: #3e8e41;
+		}
 
-        document.getElementById('grade4').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].humidity_grade = 4;
-          updatePlantData();
-        });
+		.hidden {
+			display: none;
+		}
 
-        document.getElementById('grade5').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].humidity_grade = 5;
-          updatePlantData();
-        });
+	</style>
+</head>
+<body>
 
-        document.getElementById('percent50').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].moisture_grade = '50%';
-          updatePlantData();
-        });
 
-        document.getElementById('percent75').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].moisture_grade = '75%';
-          updatePlantData();
-        });
+  <h1 style="font-size: 2.5rem; text-align: center; margin-top: 2rem; font-family: Arial, sans-serif; font-style: normal; color: white;">Plant Grading</h1>
 
-        document.getElementById('percent100').addEventListener('click', () => {
-          plantData.plants[currentPlantIndex].moisture_grade = '100%';
-          updatePlantData();
-        });
+
+
+
+
+
+	<div id="plant-container"> </div>
+
+  
+  
+
+	<div class="button-container">
+		<button onclick="showGradingButtons(0)">1</button>
+		<button onclick="showGradingButtons(1)">2</button>
+		<button onclick="showGradingButtons(2)">3</button>
+		<button onclick="showGradingButtons(3)">4</button>
+		<button onclick="showGradingButtons(4)">5</button>
+	</div>
+
+	<div id="grading-buttons-container" class="button-container hidden">
+		<button onclick="gradePlant(50)">50%</button>
+		<button onclick="gradePlant(75)">75%</button>
+		<button onclick="gradePlant(100)">100%</button>
+	</div>
+
+	<script>
+
+		var plants = [
+			{
+				name: 'Plant 1',
+				image: 'https://scx2.b-cdn.net/gfx/news/hires/2022/leaf.jpg '
+			},
+			{
+				name: 'Plant 2',
+				image: 'https://cdn.britannica.com/26/152026-050-41D137DE/Sunshine-leaves-beech-tree.jpg'
+			},
+			{
+				name: 'Plant 3',
+				image: 'https://www.thespruce.com/thmb/__hsYI0C3oDIeHKQ1pg4TBCxO2M=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/elephant-ear-plants-2132884-07-9c2c8adaf19c4be3b67b600c38c61e2b.jpg'
+			},
+			{
+				name: 'Plant 4',
+				image: 'https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/11/saluyot-jute-leaves-1296x728-header.jpg?w=1155&h=1528'
+			},
+			{
+				name: 'Plant 5',
+				image: 'https://www.gardeningknowhow.com/wp-content/uploads/2015/10/sticky-leaves.jpg'
+			}
+		];
+
+		var currentPlantIndex = 0;
+		var currentPlantGrade = null;
+
+		function showPlant() {
+			var plantContainer = document.getElementById('plant-container');
+			plantContainer.innerHTML = '';
+			var plantImage = document.createElement('img');
+			plantImage.src = plants[currentPlantIndex].image;
+			plantContainer.appendChild(plantImage);
+		}
+
+		function showGradingButtons(plantIndex) {
+			currentPlantIndex = plantIndex;
+			var gradingButtonsContainer = document.getElementById('grading-buttons-container');
+			gradingButtonsContainer.classList.remove('hidden');
+		}
+
+		function gradePlant(percentage) {
+			currentPlantGrade = percentage;
+			nextPlant();
+		}
+
+		function nextPlant() {
+			currentPlantIndex++;
+			if (currentPlantIndex >= plants.length) {
+				alert('You have graded all');
+        return;
       }
+      
+      showPlant();
+      var gradingButtonsContainer = document.getElementById('grading-buttons-container');
+      gradingButtonsContainer.classList.add('hidden');
 
-      function init() {
-        updatePlantData();
-        updateGrades();
-      }
+    }
 
-      init();
-    </script>
-  </body>
+    showPlant();
+
+  </script>
+
+</body>
 </html>
+
+
