@@ -1,31 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html class="bg-gray-100">
   <head>
     <title>Plant Monitoring</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+
+      @keyframes bounce {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+    </style>
   </head>
-  <body class="bg-gray-100">
-    <h1 class="text-3xl font-bold text-center mt-8 mb-4">Plant 1 Monitoring</h1>
-    <div id="container" class="flex flex-col items-center justify-center">
-      <img id="plant-img" src="" class="w-1/2 rounded-lg shadow-lg mb-4" />
-      <div id="values" class="bg-white rounded-lg shadow-lg p-4">
-        <p class="text-lg font-bold">Temperature: <span id="temperature"></span></p>
-        <p class="text-lg font-bold">Humidity: <span id="humidity"></span></p>
-        <p class="text-lg font-bold">Moisture: <span id="moisture"></span></p>
+  <body>
+    <div class="bg-gradient-to-r from-blue-500 to-green-500 min-h-screen">
+      <div class="max-w-3xl mx-auto py-16">
+        <h1 class="text-3xl font-bold text-center text-white mb-8">Plant 1 Monitoring</h1>
+        <div id="container" class="flex flex-col items-center justify-center">
+          <img id="plant-img" src="" class="w-1/2 rounded-lg shadow-lg mb-4 animate-bounce" />
+          <div id="values" class="bg-white rounded-lg shadow-lg p-4">
+            <p class="text-lg font-bold">Temperature: <span id="temperature"></span></p>
+            <p class="text-lg font-bold">Humidity: <span id="humidity"></span></p>
+            <p class="text-lg font-bold">Moisture: <span id="moisture"></span></p>
+          </div>
+        </div>
       </div>
     </div>
 
     <script>
-      const url = 'https://api.example.com/plant-details';
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          document.getElementById('temperature').textContent = data.temperature;
-          document.getElementById('humidity').textContent = data.humidity;
-          document.getElementById('moisture').textContent = data.moisture;
-          document.getElementById('plant-img').src = data.camera_feed_url;
-        });
+      // Dummy data
+      const data = {
+        temperature: 25,
+        humidity: 60,
+        moisture: 40
+      };
+
+      // Function to update values
+      function updateValues() {
+        // Fetch new data here using AJAX or fetch API
+        // Replace dummy data with new data
+
+        // Example:
+        data.temperature += Math.floor(Math.random() * 5) - 2; // +/- 2 degrees
+        data.humidity += Math.floor(Math.random() * 10) - 5; // +/- 5%
+        data.moisture += Math.floor(Math.random() * 10) - 5; // +/- 5%
+
+        // Update values on the page
+        const temperatureElem = document.getElementById("temperature");
+        const humidityElem = document.getElementById("humidity");
+        const moistureElem = document.getElementById("moisture");
+
+        temperatureElem.textContent = data.temperature + " °C";
+        humidityElem.textContent = data.humidity + " %";
+        moistureElem.textContent = data.moisture + " %";
+
+        // Add animation classes to elements
+        temperatureElem.classList.add("animate-bounce");
+        humidityElem.classList.add("animate-bounce");
+        moistureElem.classList.add("animate-bounce");
+
+        // Remove animation classes after 1 second
+        setTimeout(() => {
+          temperatureElem.classList.remove("animate-bounce");
+          humidityElem.classList.remove("animate-bounce");
+          moistureElem.classList.remove("animate-bounce");
+        }, 1000);
+      }
+
+      // Call updateValues every 5 seconds
+      setInterval(updateValues, 5000);
     </script>
   </body>
 </html>
